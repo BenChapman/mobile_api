@@ -2,8 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/BenChapman/mobile_api/project"
 	"github.com/BenChapman/mobile_api/project_sql_repository"
@@ -11,12 +16,18 @@ import (
 )
 
 var (
-	p    project.Project
-	repo *project_sql_repository.ProjectSQLRepository
+	p project.Project
 )
 
 func main() {
-	repo := new(project_sql_repository.ProjectSQLRepository)
+	db, err := sqlx.Open("mysql", os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@tcp("+os.Getenv("DB_HOST")+")/"+os.Getenv("DB_NAME"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	repo := &project_sql_repository.ProjectSQLRepository{
+		Sql: db,
+	}
 
 	p = project.Project{
 		ProjectRepository: repo,
@@ -25,7 +36,13 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/project", handleListProjects)
 	r.HandleFunc("/project/{id}", handleGetProject)
-	http.ListenAndServe(":3000", r)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	if err := http.ListenAndServe(":"+port, r); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func handleListProjects(w http.ResponseWriter, r *http.Request) {

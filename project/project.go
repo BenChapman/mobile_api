@@ -4,7 +4,7 @@ type ProjectDetails struct {
 	Id          int    `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
-	DojoUuid    string `json:"dojo_uuid"`
+	DojoUuid    string `json:"dojo_uuid,omitempty"`
 	Category    string `json:"category"`
 }
 
