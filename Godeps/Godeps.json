@@ -15,6 +15,16 @@
 		{
 			"ImportPath": "github.com/gorilla/mux",
 			"Rev": "dfc482b2558f4151fc8598139a686caf3fb2ef65"
+		},
+		{
+			"ImportPath": "github.com/jmoiron/sqlx",
+			"Comment": "sqlx-v1.1-65-ga7f971f",
+			"Rev": "a7f971fe8ea891a1a74ddb40c623f5722e28e8a8"
+		},
+		{
+			"ImportPath": "github.com/jmoiron/sqlx/reflectx",
+			"Comment": "sqlx-v1.1-65-ga7f971f",
+			"Rev": "a7f971fe8ea891a1a74ddb40c623f5722e28e8a8"
 		}
 	]
 }
