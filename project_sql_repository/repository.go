@@ -13,7 +13,17 @@ func (p *ProjectSQLRepository) Get(id int) (project.ProjectDetails, error) {
 	projectDetails := project.ProjectDetails{}
 
 	u := p.Sql.Unsafe()
-	err := u.Get(&projectDetails, "SELECT * FROM `project` p WHERE p.`id`=?", id)
+	err := u.Get(&projectDetails, `
+		SELECT * FROM project p
+
+		JOIN member m
+		ON p.id = m.project_id
+
+		WHERE p.id=?
+		AND (p.project_confirmed != 'No'
+		OR p.project_confirmed IS NULL)
+
+	`, id)
 	if err != nil {
 		return project.ProjectDetails{}, err
 	}
@@ -25,7 +35,15 @@ func (p *ProjectSQLRepository) GetAll() ([]project.ProjectDetails, error) {
 	projectDetails := []project.ProjectDetails{}
 
 	u := p.Sql.Unsafe()
-	err := u.Select(&projectDetails, "SELECT * FROM `project` p WHERE p.`project_confirmed` != 'No' or p.`project_confirmed` IS NULL")
+	err := u.Select(&projectDetails, `
+		SELECT * FROM project p
+
+		JOIN member m
+		ON p.id = m.project_id
+
+		WHERE p.project_confirmed != 'No'
+		OR p.project_confirmed IS NULL
+	`)
 	if err != nil {
 		return []project.ProjectDetails{}, err
 	}
