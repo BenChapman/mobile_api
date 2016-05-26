@@ -1,0 +1,15 @@
+{
+	"ImportPath": "github.com/BenChapman/mobile_api",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v71",
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1ea25387ff6f684839d82767c1733ff4d4d15d0a"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "dfc482b2558f4151fc8598139a686caf3fb2ef65"
+		}
+	]
+}
