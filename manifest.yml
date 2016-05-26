@@ -1,2 +1,7 @@
 ---
-name: cp-mobile
+applications:
+  - name: cp-mobile
+    command: mobile_api
+    memory: 256M
+    instances: 1
+
